@@ -5,6 +5,9 @@
     }],
     "@babel/react"
   ],
+  "plugins": [
+    "@babel/transform-runtime"
+  ],
   "env": {
     "production-esm": {
       "presets": [
@@ -13,6 +16,9 @@
           "loose": true
         }],
         "@babel/react"
+      ],
+      "plugins": [
+        ["@babel/transform-runtime", { "useESModules": true }]
       ]
     }
   }

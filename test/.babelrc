@@ -4,8 +4,5 @@
       "modules": false
     }],
     "@babel/react"
-  ],
-  "plugins": [
-    "@babel/transform-runtime"
   ]
 }
