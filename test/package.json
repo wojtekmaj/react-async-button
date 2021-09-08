@@ -1,0 +1,45 @@
+{
+  "name": "react-async-button-test-page",
+  "version": "1.0.0",
+  "description": "A test page for React-Async-Button.",
+  "private": true,
+  "scripts": {
+    "build": "NODE_ENV=production webpack",
+    "start": "NODE_ENV=development webpack serve"
+  },
+  "author": {
+    "name": "Wojciech Maj",
+    "email": "kontakt@wojtekmaj.pl"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@wojtekmaj/react-async-button": "portal:../",
+    "prop-types": "^15.6.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "react-is": "^17.0.0",
+    "styled-components": "^5.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.0-0",
+    "babel-loader": "^8.0.0",
+    "css-loader": "^6.0.0",
+    "eslint": "~7.19.0",
+    "html-webpack-plugin": "^5.1.0",
+    "less": "^4.0.0",
+    "less-loader": "^10.0.0",
+    "mini-css-extract-plugin": "^2.0.0",
+    "react-refresh": "^0.10.0",
+    "style-loader": "^3.0.0",
+    "webpack": "^5.20.0",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^4.0.0"
+  },
+  "resolutions": {
+    "semver@7.0.0": "^7.0.0"
+  }
+}

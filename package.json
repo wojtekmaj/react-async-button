@@ -1,0 +1,73 @@
+{
+  "name": "@wojtekmaj/react-async-button",
+  "version": "0.1.0",
+  "description": "A button that handles Promises for your React app.",
+  "main": "dist/umd/index.js",
+  "module": "dist/esm/index.js",
+  "source": "src/index.js",
+  "scripts": {
+    "build": "yarn build-js-all",
+    "build-js-all": "yarn build-js-esm && yarn build-js-umd",
+    "build-js-esm": "BABEL_ENV=production-esm babel src -d dist/esm --ignore \"**/*.spec.js,**/*.spec.jsx\"",
+    "build-js-umd": "BABEL_ENV=production-umd babel src -d dist/umd --ignore \"**/*.spec.js,**/*.spec.jsx\"",
+    "clean": "rimraf dist",
+    "jest": "jest",
+    "lint": "eslint src/ --ext .jsx,.js",
+    "prepack": "yarn clean && yarn build",
+    "test": "yarn lint && yarn jest"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ],
+    "testEnvironment": "jsdom"
+  },
+  "keywords": [
+    "react",
+    "promise",
+    "button"
+  ],
+  "author": {
+    "name": "Wojciech Maj",
+    "email": "kontakt@wojtekmaj.pl"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "make-cancellable-promise": "^1.0.0",
+    "prop-types": "^15.6.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.9.0",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.0",
+    "enzyme": "^3.10.0",
+    "eslint": "~7.19.0",
+    "eslint-config-wojtekmaj": "^0.5.0",
+    "jest": "^27.0.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "rimraf": "^3.0.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0-0"
+  },
+  "resolutions": {
+    "semver@7.0.0": "^7.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist/",
+    "src/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wojtekmaj/react-async-button.git"
+  },
+  "funding": "https://github.com/wojtekmaj/react-async-button?sponsor=1"
+}
