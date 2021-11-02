@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/@wojtekmaj/react-async-button.svg)](https://www.npmjs.com/package/@wojtekmaj/react-async-button) ![downloads](https://img.shields.io/npm/dt/@wojtekmaj/react-async-button.svg) [![CI](https://github.com/wojtekmaj/react-async-button/workflows/CI/badge.svg)](https://github.com/wojtekmaj/react-async-button/actions) ![dependencies](https://img.shields.io/david/wojtekmaj/react-async-button.svg) ![dev dependencies](https://img.shields.io/david/dev/wojtekmaj/react-async-button.svg) [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
+[![npm](https://img.shields.io/npm/v/@wojtekmaj/react-async-button.svg)](https://www.npmjs.com/package/@wojtekmaj/react-async-button) ![downloads](https://img.shields.io/npm/dt/@wojtekmaj/react-async-button.svg) [![CI](https://github.com/wojtekmaj/react-async-button/workflows/CI/badge.svg)](https://github.com/wojtekmaj/react-async-button/actions) [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
 
 # React-Async-Button
 
