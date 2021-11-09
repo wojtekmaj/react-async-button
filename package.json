@@ -71,5 +71,6 @@
     "type": "git",
     "url": "https://github.com/wojtekmaj/react-async-button.git"
   },
-  "funding": "https://github.com/wojtekmaj/react-async-button?sponsor=1"
+  "funding": "https://github.com/wojtekmaj/react-async-button?sponsor=1",
+  "packageManager": "yarn@3.1.0"
 }
