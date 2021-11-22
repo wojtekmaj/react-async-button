@@ -1390,11 +1390,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pmmmwh/react-refresh-webpack-plugin@npm:^0.5.0-0":
-  version: 0.5.0-rc.6
-  resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.0-rc.6"
+"@pmmmwh/react-refresh-webpack-plugin@npm:^0.5.0":
+  version: 0.5.2
+  resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.2"
   dependencies:
-    ansi-html: ^0.0.7
+    ansi-html-community: ^0.0.8
     common-path-prefix: ^3.0.0
     core-js-pure: ^3.8.1
     error-stack-parser: ^2.0.6
@@ -1405,11 +1405,11 @@ __metadata:
     source-map: ^0.7.3
   peerDependencies:
     "@types/webpack": 4.x || 5.x
-    react-refresh: ^0.10.0
+    react-refresh: ">=0.10.0 <1.0.0"
     sockjs-client: ^1.4.0
-    type-fest: ">=0.17.0 <2.0.0"
+    type-fest: ">=0.17.0 <3.0.0"
     webpack: ">=4.43.0 <6.0.0"
-    webpack-dev-server: 3.x || >=4.0.0-beta.0
+    webpack-dev-server: 3.x || 4.x
     webpack-hot-middleware: 2.x
     webpack-plugin-serve: 0.x || 1.x
   peerDependenciesMeta:
@@ -1425,7 +1425,7 @@ __metadata:
       optional: true
     webpack-plugin-serve:
       optional: true
-  checksum: c836fac45d2e46ce974f5dddb089ecf8b939c57ae6d749611f4927ceed291c4171b0dc24532fe0763a2fdaf831b1d01bd9c1fb7038dcbb86b6354150cea765fa
+  checksum: 3f8310c0f76d4b627cb90b822fff8906ee85e152f011221e69a4e01689157862a0ce1b677bbf7a7ef14ea0e7aa457cae1740c2ebfd84df5aba0dfb7a9f77c475
   languageName: node
   linkType: hard
 
@@ -1839,15 +1839,6 @@ __metadata:
   bin:
     ansi-html: bin/ansi-html
   checksum: 04c568e8348a636963f915e48eaa3e01218322e1169acafdd79c384f22e5558c003f79bbc480c1563865497482817c7eed025f0653ebc17642fededa5cb42089
-  languageName: node
-  linkType: hard
-
-"ansi-html@npm:^0.0.7":
-  version: 0.0.7
-  resolution: "ansi-html@npm:0.0.7"
-  bin:
-    ansi-html: ./bin/ansi-html
-  checksum: 9b839ce99650b4c2d83621d67d68622d27e7948b54f7a4386f2218a3997ee4e684e5a6e8d290880c3f3260e8d90c2613c59c7028f04992ad5c8d99d3a0fcc02c
   languageName: node
   linkType: hard
 
@@ -5398,7 +5389,7 @@ fsevents@~2.3.2:
     "@babel/core": ^7.15.0
     "@babel/preset-env": ^7.15.0
     "@babel/preset-react": ^7.14.0
-    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.0-0
+    "@pmmmwh/react-refresh-webpack-plugin": ^0.5.0
     "@wojtekmaj/react-async-button": "portal:../"
     babel-loader: ^8.0.0
     css-loader: ^6.0.0
