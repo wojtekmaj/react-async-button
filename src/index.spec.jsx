@@ -1,6 +1,6 @@
 import React from 'react';
-import { act } from 'react-dom/test-utils';
-import { mount, shallow } from 'enzyme';
+import { act, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import AsyncButton from './index';
 
@@ -29,129 +29,122 @@ describe('<AsyncButton /> component', () => {
   };
 
   it('renders button properly', () => {
-    const component = shallow(
+    render(
       <AsyncButton {...defaultProps} />,
     );
 
-    expect(component.find('button')).toHaveLength(1);
+    expect(screen.queryByRole('button')).toBeInTheDocument();
   });
 
   it('calls onClick properly', () => {
     const onClick = jest.fn();
 
-    const component = shallow(
+    render(
       <AsyncButton
         {...defaultProps}
         onClick={onClick}
       />,
     );
 
-    const button = component.find('button');
+    const button = screen.getByRole('button');
 
-    const mockEvent = {};
-    button.simulate('click', mockEvent);
+    userEvent.click(button);
 
     expect(onClick).toHaveBeenCalledTimes(1);
-    expect(onClick).toHaveBeenCalledWith(mockEvent);
+    expect(onClick).toHaveBeenCalledWith(expect.any(Object));
   });
 
   it('changes button state to success on click if onClick is synchronous', () => {
     const onClick = jest.fn();
 
-    const component = mount(
+    render(
       <AsyncButton
         {...defaultProps}
         onClick={onClick}
       />,
     );
 
-    const button = component.find('button');
+    const button = screen.getByRole('button');
 
-    button.simulate('click');
+    userEvent.click(button);
 
-    expect(button.text()).toBe('Success!');
+    expect(button).toHaveTextContent('Success!');
   });
 
   it('changes button state to default after refresh timeout has passed', () => {
     const onClick = jest.fn();
 
-    const component = mount(
+    render(
       <AsyncButton
         {...defaultProps}
         onClick={onClick}
       />,
     );
 
-    const button = component.find('button');
+    const button = screen.getByRole('button');
 
-    button.simulate('click');
+    userEvent.click(button);
 
-    const button2 = component.find('button');
-    expect(button2.text()).toBe('Success!');
-
-    act(() => {
-      jest.advanceTimersByTime(1000);
-    });
-    component.update();
-
-    const button3 = component.find('button');
-    expect(button3.text()).toBe('Success!');
+    const button2 = screen.getByRole('button');
+    expect(button2).toHaveTextContent('Success!');
 
     act(() => {
       jest.advanceTimersByTime(1000);
     });
-    component.update();
 
-    const button4 = component.find('button');
-    expect(button4.text()).toBe('Click me');
+    const button3 = screen.getByRole('button');
+    expect(button3).toHaveTextContent('Success!');
+
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    const button4 = screen.getByRole('button');
+    expect(button4).toHaveTextContent('Click me');
   });
 
   it('changes button state to pending on click if onClick is asynchronous', async () => {
     const onClick = jest.fn();
     onClick.mockImplementation(async () => {});
 
-    const component = mount(
+    render(
       <AsyncButton
         {...defaultProps}
         onClick={onClick}
       />,
     );
 
-    const button = component.find('button');
+    const button = screen.getByRole('button');
 
-    button.simulate('click');
+    userEvent.click(button);
 
-    const button2 = component.find('button');
-    expect(button2.text()).toBe('Loading…');
+    const button2 = screen.getByRole('button');
+    expect(button2).toHaveTextContent('Loading…');
 
-    await act(async () => {
-      await waitForAsyncFakeTimers();
-    });
+    await act(waitForAsyncFakeTimers);
   });
 
   it('changes button state to success after asynchronous onClick is resolved', async () => {
     const onClick = jest.fn();
     onClick.mockImplementation(async () => {});
 
-    const component = mount(
+    render(
       <AsyncButton
         {...defaultProps}
         onClick={onClick}
       />,
     );
 
-    const button = component.find('button');
+    const button = screen.getByRole('button');
 
-    button.simulate('click');
+    userEvent.click(button);
 
-    const button2 = component.find('button');
-    expect(button2.text()).toBe('Loading…');
+    const button2 = screen.getByRole('button');
+    expect(button2).toHaveTextContent('Loading…');
 
-    await act(async () => {
-      await waitForAsyncFakeTimers();
-    });
+    await act(waitForAsyncFakeTimers);
 
-    const button3 = component.find('button');
-    expect(button3.text()).toBe('Success!');
+    const button3 = screen.getByRole('button');
+    expect(button3).toHaveTextContent('Success!');
   });
 });
