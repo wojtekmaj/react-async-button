@@ -23,8 +23,7 @@ function sleep(ms) {
 }
 
 export default function Test() {
-  function onSyncClick() {
-  }
+  function onSyncClick() {}
 
   async function onAsyncClick() {
     await sleep(2000);
@@ -33,9 +32,7 @@ export default function Test() {
   return (
     <div className="Test">
       <header>
-        <h1>
-          react-async-button test page
-        </h1>
+        <h1>react-async-button test page</h1>
       </header>
       <div className="Test__container">
         <main className="Test__container__content">
@@ -62,11 +59,7 @@ export default function Test() {
             successConfig={successConfig}
             errorConfig={errorConfig}
           >
-            I’m using
-            {' '}
-            <code>as</code>
-            {' '}
-            prop
+            I’m using <code>as</code> prop
           </AsyncButton>
         </main>
       </div>

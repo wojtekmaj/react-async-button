@@ -1,9 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import makeCancellable from 'make-cancellable-promise';
 
@@ -27,55 +22,59 @@ export default function AsyncButton({
   const cancellablePromise = useRef();
   const timeout = useRef();
 
-  useEffect(() => (() => {
-    if (cancellablePromise.current) {
-      cancellablePromise.current.cancel();
-    }
-    clearTimeout(timeout.current);
-  }), []);
+  useEffect(
+    () => () => {
+      if (cancellablePromise.current) {
+        cancellablePromise.current.cancel();
+      }
+      clearTimeout(timeout.current);
+    },
+    [],
+  );
 
-  const onClickInternal = useCallback(async (event) => {
-    clearTimeout(timeout.current);
+  const onClickInternal = useCallback(
+    async (event) => {
+      clearTimeout(timeout.current);
 
-    try {
-      const result = onClick(event);
-      setButtonState(STATES.PENDING);
+      try {
+        const result = onClick(event);
+        setButtonState(STATES.PENDING);
 
-      if (result instanceof Promise) {
-        cancellablePromise.current = makeCancellable(result);
-        await cancellablePromise.current.promise;
+        if (result instanceof Promise) {
+          cancellablePromise.current = makeCancellable(result);
+          await cancellablePromise.current.promise;
+        }
+
+        setButtonState(STATES.SUCCESS);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+        setButtonState(STATES.ERROR);
       }
 
-      setButtonState(STATES.SUCCESS);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-      setButtonState(STATES.ERROR);
-    }
-
-    timeout.current = setTimeout(() => {
-      setButtonState(STATES.INIT);
-    }, resetTimeout);
-  }, [onClick, resetTimeout]);
+      timeout.current = setTimeout(() => {
+        setButtonState(STATES.INIT);
+      }, resetTimeout);
+    },
+    [onClick, resetTimeout],
+  );
 
   const buttonConfig = (() => {
     switch (buttonState) {
-      case STATES.ERROR: return errorConfig;
-      case STATES.PENDING: return pendingConfig;
-      case STATES.SUCCESS: return successConfig;
-      default: return null;
+      case STATES.ERROR:
+        return errorConfig;
+      case STATES.PENDING:
+        return pendingConfig;
+      case STATES.SUCCESS:
+        return successConfig;
+      default:
+        return null;
     }
   })();
 
   const Component = as;
 
-  return (
-    <Component
-      onClick={onClick ? onClickInternal : null}
-      {...otherProps}
-      {...buttonConfig}
-    />
-  );
+  return <Component onClick={onClick ? onClickInternal : null} {...otherProps} {...buttonConfig} />;
 }
 
 const configProps = {

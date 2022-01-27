@@ -1,25 +1,27 @@
 {
   "presets": [
-    ["@babel/preset-env", {
-      "loose": true
-    }],
+    [
+      "@babel/preset-env",
+      {
+        "loose": true
+      }
+    ],
     "@babel/react"
   ],
-  "plugins": [
-    "@babel/transform-runtime"
-  ],
+  "plugins": ["@babel/transform-runtime"],
   "env": {
     "production-esm": {
       "presets": [
-        ["@babel/env", {
-          "modules": false,
-          "loose": true
-        }],
+        [
+          "@babel/env",
+          {
+            "modules": false,
+            "loose": true
+          }
+        ],
         "@babel/react"
       ],
-      "plugins": [
-        ["@babel/transform-runtime", { "useESModules": true }]
-      ]
+      "plugins": [["@babel/transform-runtime", { "useESModules": true }]]
     }
   }
 }

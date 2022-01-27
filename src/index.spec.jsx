@@ -29,9 +29,7 @@ describe('<AsyncButton /> component', () => {
   };
 
   it('renders button properly', () => {
-    render(
-      <AsyncButton {...defaultProps} />,
-    );
+    render(<AsyncButton {...defaultProps} />);
 
     expect(screen.queryByRole('button')).toBeInTheDocument();
   });
@@ -39,12 +37,7 @@ describe('<AsyncButton /> component', () => {
   it('calls onClick properly', () => {
     const onClick = jest.fn();
 
-    render(
-      <AsyncButton
-        {...defaultProps}
-        onClick={onClick}
-      />,
-    );
+    render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
     const button = screen.getByRole('button');
 
@@ -57,12 +50,7 @@ describe('<AsyncButton /> component', () => {
   it('changes button state to success on click if onClick is synchronous', () => {
     const onClick = jest.fn();
 
-    render(
-      <AsyncButton
-        {...defaultProps}
-        onClick={onClick}
-      />,
-    );
+    render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
     const button = screen.getByRole('button');
 
@@ -74,12 +62,7 @@ describe('<AsyncButton /> component', () => {
   it('changes button state to default after refresh timeout has passed', () => {
     const onClick = jest.fn();
 
-    render(
-      <AsyncButton
-        {...defaultProps}
-        onClick={onClick}
-      />,
-    );
+    render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
     const button = screen.getByRole('button');
 
@@ -107,12 +90,7 @@ describe('<AsyncButton /> component', () => {
     const onClick = jest.fn();
     onClick.mockImplementation(async () => {});
 
-    render(
-      <AsyncButton
-        {...defaultProps}
-        onClick={onClick}
-      />,
-    );
+    render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
     const button = screen.getByRole('button');
 
@@ -128,12 +106,7 @@ describe('<AsyncButton /> component', () => {
     const onClick = jest.fn();
     onClick.mockImplementation(async () => {});
 
-    render(
-      <AsyncButton
-        {...defaultProps}
-        onClick={onClick}
-      />,
-    );
+    render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
     const button = screen.getByRole('button');
 

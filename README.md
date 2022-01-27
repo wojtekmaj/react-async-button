@@ -5,8 +5,9 @@
 A button that handles Promises for your React app.
 
 ## tl;dr
-* Install by executing `npm install @wojtekmaj/react-async-button` or `yarn add @wojtekmaj/react-async-button`.
-* Use by adding `import AsyncButton from '@wojtekmaj/react-async-button'` and passing `pendingConfig`, `successConfig`.
+
+- Install by executing `npm install @wojtekmaj/react-async-button` or `yarn add @wojtekmaj/react-async-button`.
+- Use by adding `import AsyncButton from '@wojtekmaj/react-async-button'` and passing `pendingConfig`, `successConfig`.
 
 ## Getting started
 
@@ -67,17 +68,16 @@ Renders a button.
 
 #### Props
 
-|Prop name|Description|Default value|Example values|
-|----|----|----|----|
-|as|Component to render button with.|`"button"`|<ul><li>String: `"custom-button"`</li><li>React component: `MyButton`</li></ul>|
-|errorConfig|Props to override default props with when `onClick` async function throws.|`{}`|`{ children: 'Try again' }`|
-|onClick|A function, a function returning a Promise, or an async function.|n/a||
-|pendingConfig|Props to override default props when button has been clicked but `onClick` function did not yet resolve.|`{}`|`{ children: 'Loading…' }`|
-|resetTimeout|Time in milliseconds after which AsyncButton should stop using `errorConfig` / `successConfig` overrides.|`2000`|`5000`|
-|successConfig|Props to override default props with when `onClick` async function resolves.|`{}`|`{ children: 'Done' }`|
+| Prop name     | Description                                                                                               | Default value | Example values                                                                  |
+| ------------- | --------------------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------- |
+| as            | Component to render button with.                                                                          | `"button"`    | <ul><li>String: `"custom-button"`</li><li>React component: `MyButton`</li></ul> |
+| errorConfig   | Props to override default props with when `onClick` async function throws.                                | `{}`          | `{ children: 'Try again' }`                                                     |
+| onClick       | A function, a function returning a Promise, or an async function.                                         | n/a           |                                                                                 |
+| pendingConfig | Props to override default props when button has been clicked but `onClick` function did not yet resolve.  | `{}`          | `{ children: 'Loading…' }`                                                      |
+| resetTimeout  | Time in milliseconds after which AsyncButton should stop using `errorConfig` / `successConfig` overrides. | `2000`        | `5000`                                                                          |
+| successConfig | Props to override default props with when `onClick` async function resolves.                              | `{}`          | `{ children: 'Done' }`                                                          |
 
 …and everything else a normal `<button>` would accept!
-
 
 #### Accessibility
 
