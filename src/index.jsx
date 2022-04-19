@@ -9,73 +9,87 @@ const STATES = {
   SUCCESS: 'success',
 };
 
-export default function AsyncButton({
-  as = 'button',
-  errorConfig,
-  onClick,
-  pendingConfig,
-  resetTimeout = 2000,
-  successConfig,
-  ...otherProps
-}) {
-  const [buttonState, setButtonState] = useState(STATES.INIT);
-  const cancellablePromise = useRef();
-  const timeout = useRef();
-
-  useEffect(
-    () => () => {
-      if (cancellablePromise.current) {
-        cancellablePromise.current.cancel();
-      }
-      clearTimeout(timeout.current);
+const AsyncButton = React.forwardRef(
+  (
+    {
+      as = 'button',
+      errorConfig,
+      onClick,
+      pendingConfig,
+      resetTimeout = 2000,
+      successConfig,
+      ...otherProps
     },
-    [],
-  );
+    ref,
+  ) => {
+    const [buttonState, setButtonState] = useState(STATES.INIT);
+    const cancellablePromise = useRef();
+    const timeout = useRef();
 
-  const onClickInternal = useCallback(
-    async (event) => {
-      clearTimeout(timeout.current);
+    useEffect(
+      () => () => {
+        if (cancellablePromise.current) {
+          cancellablePromise.current.cancel();
+        }
+        clearTimeout(timeout.current);
+      },
+      [],
+    );
 
-      try {
-        const result = onClick(event);
-        setButtonState(STATES.PENDING);
+    const onClickInternal = useCallback(
+      async (event) => {
+        clearTimeout(timeout.current);
 
-        if (result instanceof Promise) {
-          cancellablePromise.current = makeCancellable(result);
-          await cancellablePromise.current.promise;
+        try {
+          const result = onClick(event);
+          setButtonState(STATES.PENDING);
+
+          if (result instanceof Promise) {
+            cancellablePromise.current = makeCancellable(result);
+            await cancellablePromise.current.promise;
+          }
+
+          setButtonState(STATES.SUCCESS);
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error(error);
+          setButtonState(STATES.ERROR);
         }
 
-        setButtonState(STATES.SUCCESS);
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error);
-        setButtonState(STATES.ERROR);
+        timeout.current = setTimeout(() => {
+          setButtonState(STATES.INIT);
+        }, resetTimeout);
+      },
+      [onClick, resetTimeout],
+    );
+
+    const buttonConfig = (() => {
+      switch (buttonState) {
+        case STATES.ERROR:
+          return errorConfig;
+        case STATES.PENDING:
+          return pendingConfig;
+        case STATES.SUCCESS:
+          return successConfig;
+        default:
+          return null;
       }
+    })();
 
-      timeout.current = setTimeout(() => {
-        setButtonState(STATES.INIT);
-      }, resetTimeout);
-    },
-    [onClick, resetTimeout],
-  );
+    const Component = as;
 
-  const buttonConfig = (() => {
-    switch (buttonState) {
-      case STATES.ERROR:
-        return errorConfig;
-      case STATES.PENDING:
-        return pendingConfig;
-      case STATES.SUCCESS:
-        return successConfig;
-      default:
-        return null;
-    }
-  })();
+    return (
+      <Component
+        ref={ref}
+        onClick={onClick ? onClickInternal : null}
+        {...otherProps}
+        {...buttonConfig}
+      />
+    );
+  },
+);
 
-  const Component = as;
-
-  return <Component onClick={onClick ? onClickInternal : null} {...otherProps} {...buttonConfig} />;
-}
+AsyncButton.displayName = 'AsyncButton';
 
 const configProps = {
   children: PropTypes.node,
@@ -93,3 +107,5 @@ AsyncButton.propTypes = {
   resetTimeout: PropTypes.number,
   successConfig: isConfigObject,
 };
+
+export default AsyncButton;

@@ -34,6 +34,16 @@ describe('<AsyncButton /> component', () => {
     expect(screen.queryByRole('button')).toBeInTheDocument();
   });
 
+  it('passes ref correctly', () => {
+    const ref = React.createRef();
+
+    render(<AsyncButton {...defaultProps} ref={ref} />);
+
+    const button = screen.getByRole('button');
+
+    expect(ref.current).toBe(button);
+  });
+
   it('calls onClick properly', () => {
     const onClick = jest.fn();
 
