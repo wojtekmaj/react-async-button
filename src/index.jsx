@@ -51,8 +51,6 @@ const AsyncButton = React.forwardRef(
 
           setButtonState(STATES.SUCCESS);
         } catch (error) {
-          // eslint-disable-next-line no-console
-          console.error(error);
           setButtonState(STATES.ERROR);
         }
 
