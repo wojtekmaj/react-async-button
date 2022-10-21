@@ -4,8 +4,6 @@ import userEvent from '@testing-library/user-event';
 
 import AsyncButton from './index';
 
-import { waitForAsyncFakeTimers } from '../test-utils';
-
 jest.useFakeTimers();
 
 const pendingConfig = {
@@ -28,6 +26,13 @@ describe('<AsyncButton /> component', () => {
     errorConfig,
   };
 
+  let user;
+  beforeEach(() => {
+    user = userEvent.setup({
+      advanceTimers: jest.advanceTimersByTime,
+    });
+  });
+
   it('renders button properly', () => {
     render(<AsyncButton {...defaultProps} />);
 
@@ -44,39 +49,39 @@ describe('<AsyncButton /> component', () => {
     expect(ref.current).toBe(button);
   });
 
-  it('calls onClick properly', () => {
+  it('calls onClick properly', async () => {
     const onClick = jest.fn();
 
     render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
     const button = screen.getByRole('button');
 
-    userEvent.click(button);
+    await user.click(button);
 
     expect(onClick).toHaveBeenCalledTimes(1);
     expect(onClick).toHaveBeenCalledWith(expect.any(Object));
   });
 
-  it('changes button state to success on click if onClick is synchronous', () => {
-    const onClick = jest.fn();
+  it('changes button state to success on click if onClick is synchronous', async () => {
+    const onClick = () => {};
 
     render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
     const button = screen.getByRole('button');
 
-    userEvent.click(button);
+    await user.click(button);
 
     expect(button).toHaveTextContent('Success!');
   });
 
-  it('changes button state to default after refresh timeout has passed', () => {
-    const onClick = jest.fn();
+  it('changes button state to default after refresh timeout has passed', async () => {
+    const onClick = () => {};
 
     render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
     const button = screen.getByRole('button');
 
-    userEvent.click(button);
+    await user.click(button);
 
     const button2 = screen.getByRole('button');
     expect(button2).toHaveTextContent('Success!');
@@ -97,35 +102,45 @@ describe('<AsyncButton /> component', () => {
   });
 
   it('changes button state to pending on click if onClick is asynchronous', async () => {
-    const onClick = jest.fn();
-    onClick.mockImplementation(async () => {});
+    let resolve;
+    const onClick = () =>
+      new Promise((res) => {
+        resolve = res;
+      });
 
     render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
     const button = screen.getByRole('button');
 
-    userEvent.click(button);
+    await user.click(button);
 
     const button2 = screen.getByRole('button');
     expect(button2).toHaveTextContent('Loading…');
 
-    await act(waitForAsyncFakeTimers);
+    await act(async () => {
+      resolve();
+    });
   });
 
   it('changes button state to success after asynchronous onClick is resolved', async () => {
-    const onClick = jest.fn();
-    onClick.mockImplementation(async () => {});
+    let resolve;
+    const onClick = () =>
+      new Promise((res) => {
+        resolve = res;
+      });
 
     render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
     const button = screen.getByRole('button');
 
-    userEvent.click(button);
+    await user.click(button);
 
     const button2 = screen.getByRole('button');
     expect(button2).toHaveTextContent('Loading…');
 
-    await act(waitForAsyncFakeTimers);
+    await act(async () => {
+      resolve();
+    });
 
     const button3 = screen.getByRole('button');
     expect(button3).toHaveTextContent('Success!');
