@@ -71,7 +71,8 @@ describe('<AsyncButton /> component', () => {
 
     await user.click(button);
 
-    expect(button).toHaveTextContent('Success!');
+    const button2 = screen.getByRole('button');
+    expect(button2).toHaveTextContent('Success!');
   });
 
   it('changes button state to default after refresh timeout has passed', async () => {
@@ -144,5 +145,43 @@ describe('<AsyncButton /> component', () => {
 
     const button3 = screen.getByRole('button');
     expect(button3).toHaveTextContent('Success!');
+  });
+
+  it('changes button state to default after refresh timeout has passed', async () => {
+    let resolve;
+    const onClick = () =>
+      new Promise((res) => {
+        resolve = res;
+      });
+
+    render(<AsyncButton {...defaultProps} onClick={onClick} />);
+
+    const button = screen.getByRole('button');
+
+    await user.click(button);
+
+    const button2 = screen.getByRole('button');
+    expect(button2).toHaveTextContent('Loading…');
+
+    await act(async () => {
+      resolve();
+    });
+
+    const button3 = screen.getByRole('button');
+    expect(button3).toHaveTextContent('Success!');
+
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    const button4 = screen.getByRole('button');
+    expect(button4).toHaveTextContent('Success!');
+
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    const button5 = screen.getByRole('button');
+    expect(button5).toHaveTextContent('Click me');
   });
 });
