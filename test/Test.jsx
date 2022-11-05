@@ -29,6 +29,15 @@ export default function Test() {
     await sleep(2000);
   }
 
+  function onSyncErrorClick() {
+    throw new Error('Sync error');
+  }
+
+  async function onAsyncErrorClick() {
+    await sleep(2000);
+    throw new Error('Async error');
+  }
+
   return (
     <div className="Test">
       <header>
@@ -51,6 +60,22 @@ export default function Test() {
             errorConfig={errorConfig}
           >
             Do async stuff
+          </AsyncButton>
+          <AsyncButton
+            onClick={onSyncErrorClick}
+            pendingConfig={pendingConfig}
+            successConfig={successConfig}
+            errorConfig={errorConfig}
+          >
+            Crash on sync stuff
+          </AsyncButton>
+          <AsyncButton
+            onClick={onAsyncErrorClick}
+            pendingConfig={pendingConfig}
+            successConfig={successConfig}
+            errorConfig={errorConfig}
+          >
+            Crash on async stuff
           </AsyncButton>
           <AsyncButton
             as={Button}
