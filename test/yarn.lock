@@ -1278,7 +1278,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.8.4":
+"@babel/runtime@npm:^7.8.4":
   version: 7.19.4
   resolution: "@babel/runtime@npm:7.19.4"
   dependencies:
@@ -1953,7 +1953,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@wojtekmaj/react-async-button@portal:../::locator=react-async-button-test-page%40workspace%3A."
   dependencies:
-    "@babel/runtime": ^7.0.0
     make-cancellable-promise: ^1.0.0
     prop-types: ^15.6.0
   peerDependencies:

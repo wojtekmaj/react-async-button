@@ -37,8 +37,22 @@ const AsyncButton = React.forwardRef(
     );
 
     const onClickInternal = useCallback(
-      async (event) => {
+      (event) => {
         clearTimeout(timeout.current);
+
+        const onSuccess = () => {
+          setButtonState(STATES.SUCCESS);
+        };
+
+        const onError = () => {
+          setButtonState(STATES.ERROR);
+        };
+
+        const finallyCallback = () => {
+          timeout.current = setTimeout(() => {
+            setButtonState(STATES.INIT);
+          }, resetTimeout);
+        };
 
         try {
           const result = onClick(event);
@@ -46,17 +60,18 @@ const AsyncButton = React.forwardRef(
 
           if (result instanceof Promise) {
             cancellablePromise.current = makeCancellable(result);
-            await cancellablePromise.current.promise;
+            cancellablePromise.current.promise
+              .then(onSuccess)
+              .catch(onError)
+              .finally(finallyCallback);
+          } else {
+            onSuccess();
+            finallyCallback();
           }
-
-          setButtonState(STATES.SUCCESS);
         } catch (error) {
-          setButtonState(STATES.ERROR);
+          onError();
+          finallyCallback();
         }
-
-        timeout.current = setTimeout(() => {
-          setButtonState(STATES.INIT);
-        }, resetTimeout);
       },
       [onClick, resetTimeout],
     );
