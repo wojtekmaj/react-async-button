@@ -1,7 +1,7 @@
 import React from 'react';
 import AsyncButton from '@wojtekmaj/react-async-button/src';
 
-import './Test.less';
+import './Test.css';
 
 import { Button } from './button.styles';
 
