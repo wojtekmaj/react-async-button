@@ -20,90 +20,104 @@ const STATES = {
   SUCCESS: 'success',
 } as const;
 
-export default function AsyncButton<T extends React.ElementType = 'button'>({
-  as,
-  errorConfig,
-  onClick,
-  pendingConfig,
-  resetTimeout = 2000,
-  successConfig,
-  ...otherProps
-}: AsyncButtonProps<T>) {
-  const [buttonState, setButtonState] = useState<typeof STATES[keyof typeof STATES]>(STATES.INIT);
-  const cancellablePromise = useRef<ReturnType<typeof makeCancellable>>();
-  const timeout = useRef<ReturnType<typeof setTimeout>>();
+const AsyncButton = React.forwardRef(
+  <T extends React.ElementType = 'button'>(
+    {
+      as,
+      errorConfig,
+      onClick,
+      pendingConfig,
+      resetTimeout = 2000,
+      successConfig,
+      ...otherProps
+    }: AsyncButtonProps<T>,
+    ref: React.ForwardedRef<any>,
+  ) => {
+    const [buttonState, setButtonState] = useState<typeof STATES[keyof typeof STATES]>(STATES.INIT);
+    const cancellablePromise = useRef<ReturnType<typeof makeCancellable>>();
+    const timeout = useRef<ReturnType<typeof setTimeout>>();
 
-  useEffect(
-    () => () => {
-      if (cancellablePromise.current) {
-        cancellablePromise.current.cancel();
-      }
-      clearTimeout(timeout.current);
-    },
-    [],
-  );
+    useEffect(
+      () => () => {
+        if (cancellablePromise.current) {
+          cancellablePromise.current.cancel();
+        }
+        clearTimeout(timeout.current);
+      },
+      [],
+    );
 
-  const onClickInternal = useCallback(
-    (event: React.MouseEvent) => {
-      if (!onClick) {
-        return;
-      }
+    const onClickInternal = useCallback(
+      (event: React.MouseEvent) => {
+        if (!onClick) {
+          return;
+        }
 
-      clearTimeout(timeout.current);
+        clearTimeout(timeout.current);
 
-      const onSuccess = () => {
-        setButtonState(STATES.SUCCESS);
-      };
+        const onSuccess = () => {
+          setButtonState(STATES.SUCCESS);
+        };
 
-      const onError = () => {
-        setButtonState(STATES.ERROR);
-      };
+        const onError = () => {
+          setButtonState(STATES.ERROR);
+        };
 
-      const finallyCallback = () => {
-        timeout.current = setTimeout(() => {
-          setButtonState(STATES.INIT);
-        }, resetTimeout);
-      };
+        const finallyCallback = () => {
+          timeout.current = setTimeout(() => {
+            setButtonState(STATES.INIT);
+          }, resetTimeout);
+        };
 
-      try {
-        const result = onClick(event);
-        setButtonState(STATES.PENDING);
+        try {
+          const result = onClick(event);
+          setButtonState(STATES.PENDING);
 
-        if (result instanceof Promise) {
-          cancellablePromise.current = makeCancellable(result);
-          cancellablePromise.current.promise
-            .then(onSuccess)
-            .catch(onError)
-            .finally(finallyCallback);
-        } else {
-          onSuccess();
+          if (result instanceof Promise) {
+            cancellablePromise.current = makeCancellable(result);
+            cancellablePromise.current.promise
+              .then(onSuccess)
+              .catch(onError)
+              .finally(finallyCallback);
+          } else {
+            onSuccess();
+            finallyCallback();
+          }
+        } catch (error) {
+          onError();
           finallyCallback();
         }
-      } catch (error) {
-        onError();
-        finallyCallback();
+      },
+      [onClick, resetTimeout],
+    );
+
+    const Component = as || 'button';
+
+    const buttonConfig: Config<typeof Component> | null | undefined = (() => {
+      switch (buttonState) {
+        case STATES.ERROR:
+          return errorConfig;
+        case STATES.PENDING:
+          return pendingConfig;
+        case STATES.SUCCESS:
+          return successConfig;
+        default:
+          return null;
       }
-    },
-    [onClick, resetTimeout],
-  );
+    })();
 
-  const Component = as || 'button';
+    return (
+      <Component
+        ref={ref}
+        onClick={onClick ? onClickInternal : null}
+        {...otherProps}
+        {...buttonConfig}
+      />
+    );
+  },
+);
 
-  const buttonConfig: Config<typeof Component> | null | undefined = (() => {
-    switch (buttonState) {
-      case STATES.ERROR:
-        return errorConfig;
-      case STATES.PENDING:
-        return pendingConfig;
-      case STATES.SUCCESS:
-        return successConfig;
-      default:
-        return null;
-    }
-  })();
-
-  return <Component onClick={onClick ? onClickInternal : null} {...otherProps} {...buttonConfig} />;
-}
+AsyncButton.displayName = 'AsyncButton';
 
 const configProps = {
   children: PropTypes.node,
@@ -120,3 +134,7 @@ AsyncButton.propTypes = {
   resetTimeout: PropTypes.number,
   successConfig: isConfigObject,
 };
+
+export default AsyncButton as <T extends React.ElementType = 'button'>(
+  props: AsyncButtonProps<T> & React.RefAttributes<any>,
+) => React.ReactElement | null;

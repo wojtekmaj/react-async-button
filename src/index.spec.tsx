@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -39,7 +39,15 @@ describe('<AsyncButton /> component', () => {
     expect(screen.queryByRole('button')).toBeInTheDocument();
   });
 
-  it.todo('passes ref correctly');
+  it('passes ref correctly', () => {
+    const ref = createRef<HTMLButtonElement>();
+
+    render(<AsyncButton {...defaultProps} ref={ref} />);
+
+    const button = screen.getByRole('button');
+
+    expect(ref.current).toBe(button);
+  });
 
   it('calls onClick properly', async () => {
     const onClick = jest.fn();
@@ -179,5 +187,72 @@ describe('<AsyncButton /> component', () => {
 
     const button5 = screen.getByRole('button');
     expect(button5).toHaveTextContent('Click me');
+  });
+
+  it('should allow button props to be passed by default', () => {
+    // @ts-expect-no-error
+    <AsyncButton {...defaultProps} type="submit" />;
+  });
+
+  it('should allow button props to be passed given as="button"', () => {
+    // @ts-expect-no-error
+    <AsyncButton {...defaultProps} as="button" disabled />;
+  });
+
+  it('should not allow link props to be passed given as="button"', () => {
+    // @ts-expect-error-next-line
+    <AsyncButton {...defaultProps} as="button" href="https://example.com" />;
+
+    // Sanity check
+    // @ts-expect-error-next-line
+    <button href="https://example.com"></button>;
+  });
+
+  it('should allow link props to be passed given as="a"', () => {
+    // @ts-expect-no-error
+    <AsyncButton {...defaultProps} as="a" href="https://example.com" />;
+  });
+
+  it('should not allow button props to be passed given as="a"', () => {
+    // @ts-expect-error-next-line
+    <AsyncButton {...defaultProps} as="a" disabled href="https://example.com" />;
+
+    // Sanity check
+    // @ts-expect-error-next-line
+    <a disabled href="https://example.com">
+      Click me
+    </a>;
+  });
+
+  it('should not allow button props to be passed given as={MyButton}', () => {
+    function MyButton() {
+      return <button type="submit"></button>;
+    }
+
+    // @ts-expect-error-next-line
+    <AsyncButton {...defaultProps} as={MyButton} type="submit" />;
+
+    // Sanity check
+    function MyCustomComponent({ as, ...otherProps }: { as: React.ElementType }) {
+      const Component = as || 'div';
+      return <Component {...otherProps} />;
+    }
+
+    // @ts-expect-error-next-line
+    <MyCustomComponent as={MyButton} type="submit" />;
+  });
+
+  it('should not allow invalid values for as', () => {
+    // @ts-expect-error-next-line
+    <AsyncButton {...defaultProps} as={5} type="submit" />;
+
+    // Sanity check
+    function MyCustomComponent({ as }: { as: React.ElementType }) {
+      const Component = as || 'div';
+      return <Component />;
+    }
+
+    // @ts-expect-error-next-line
+    <MyCustomComponent as={5} />;
   });
 });
