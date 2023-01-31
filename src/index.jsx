@@ -76,6 +76,8 @@ const AsyncButton = React.forwardRef(
       [onClick, resetTimeout],
     );
 
+    const Component = as;
+
     const buttonConfig = (() => {
       switch (buttonState) {
         case STATES.ERROR:
@@ -88,8 +90,6 @@ const AsyncButton = React.forwardRef(
           return null;
       }
     })();
-
-    const Component = as;
 
     return (
       <Component
