@@ -2,29 +2,42 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import makeCancellable from 'make-cancellable-promise';
 
+type Config<T extends React.ElementType> = React.ComponentPropsWithoutRef<T>;
+
+type AsyncButtonProps<T extends React.ElementType> = {
+  as?: T;
+  errorConfig?: Config<T>;
+  onClick?: (event: React.MouseEvent) => void | Promise<void>;
+  pendingConfig?: Config<T>;
+  resetTimeout?: number;
+  successConfig?: Config<T>;
+} & Config<T>;
+
+type PolymorphicRef<T extends React.ElementType> = React.ComponentPropsWithRef<T>['ref'];
+
 const STATES = {
   ERROR: 'error',
   INIT: 'init',
   PENDING: 'pending',
   SUCCESS: 'success',
-};
+} as const;
 
 const AsyncButton = React.forwardRef(
-  (
+  <T extends React.ElementType = 'button'>(
     {
-      as = 'button',
+      as,
       errorConfig,
       onClick,
       pendingConfig,
       resetTimeout = 2000,
       successConfig,
       ...otherProps
-    },
-    ref,
+    }: AsyncButtonProps<T>,
+    ref?: PolymorphicRef<T>,
   ) => {
-    const [buttonState, setButtonState] = useState(STATES.INIT);
-    const cancellablePromise = useRef();
-    const timeout = useRef();
+    const [buttonState, setButtonState] = useState<typeof STATES[keyof typeof STATES]>(STATES.INIT);
+    const cancellablePromise = useRef<ReturnType<typeof makeCancellable>>();
+    const timeout = useRef<ReturnType<typeof setTimeout>>();
 
     useEffect(
       () => () => {
@@ -37,7 +50,11 @@ const AsyncButton = React.forwardRef(
     );
 
     const onClickInternal = useCallback(
-      (event) => {
+      (event: React.MouseEvent) => {
+        if (!onClick) {
+          return;
+        }
+
         clearTimeout(timeout.current);
 
         const onSuccess = () => {
@@ -76,9 +93,9 @@ const AsyncButton = React.forwardRef(
       [onClick, resetTimeout],
     );
 
-    const Component = as;
+    const Component = as || 'button';
 
-    const buttonConfig = (() => {
+    const buttonConfig: Config<typeof Component> | null | undefined = (() => {
       switch (buttonState) {
         case STATES.ERROR:
           return errorConfig;
@@ -120,4 +137,6 @@ AsyncButton.propTypes = {
   successConfig: isConfigObject,
 };
 
-export default AsyncButton;
+export default AsyncButton as <T extends React.ElementType = 'button'>(
+  props: AsyncButtonProps<T> & { ref?: PolymorphicRef<T> },
+) => React.ReactElement | null;
