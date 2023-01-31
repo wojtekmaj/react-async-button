@@ -13,6 +13,8 @@ type AsyncButtonProps<T extends React.ElementType> = {
   successConfig?: Config<T>;
 } & Config<T>;
 
+type PolymorphicRef<T extends React.ElementType> = React.ComponentPropsWithRef<T>['ref'];
+
 const STATES = {
   ERROR: 'error',
   INIT: 'init',
@@ -31,7 +33,7 @@ const AsyncButton = React.forwardRef(
       successConfig,
       ...otherProps
     }: AsyncButtonProps<T>,
-    ref: React.ForwardedRef<any>,
+    ref?: PolymorphicRef<T>,
   ) => {
     const [buttonState, setButtonState] = useState<typeof STATES[keyof typeof STATES]>(STATES.INIT);
     const cancellablePromise = useRef<ReturnType<typeof makeCancellable>>();
@@ -136,5 +138,5 @@ AsyncButton.propTypes = {
 };
 
 export default AsyncButton as <T extends React.ElementType = 'button'>(
-  props: AsyncButtonProps<T> & React.RefAttributes<any>,
+  props: AsyncButtonProps<T> & { ref?: PolymorphicRef<T> },
 ) => React.ReactElement | null;
