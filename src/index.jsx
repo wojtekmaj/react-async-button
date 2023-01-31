@@ -114,7 +114,6 @@ const isConfigObject = PropTypes.shape(configProps);
 AsyncButton.propTypes = {
   ...configProps,
   errorConfig: isConfigObject,
-  initConfig: isConfigObject,
   onClick: PropTypes.func,
   pendingConfig: isConfigObject,
   resetTimeout: PropTypes.number,
