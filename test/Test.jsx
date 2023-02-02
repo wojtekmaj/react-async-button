@@ -23,7 +23,9 @@ function sleep(ms) {
 }
 
 export default function Test() {
-  function onSyncClick() {}
+  function onSyncClick() {
+    // Intentionally empty
+  }
 
   async function onAsyncClick() {
     await sleep(2000);
