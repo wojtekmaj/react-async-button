@@ -1,11 +1,11 @@
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import React, { createRef } from 'react';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import AsyncButton from './index';
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 const pendingConfig = {
   children: 'Loading…',
@@ -30,7 +30,7 @@ describe('<AsyncButton /> component', () => {
   let user: ReturnType<typeof userEvent.setup>;
   beforeEach(() => {
     user = userEvent.setup({
-      advanceTimers: jest.advanceTimersByTime,
+      advanceTimers: vi.advanceTimersByTime.bind(vi),
     });
   });
 
@@ -51,7 +51,7 @@ describe('<AsyncButton /> component', () => {
   });
 
   it('calls onClick properly', async () => {
-    const onClick = jest.fn();
+    const onClick = vi.fn();
 
     render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
@@ -93,14 +93,14 @@ describe('<AsyncButton /> component', () => {
     expect(button2).toHaveTextContent('Success!');
 
     act(() => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     const button3 = screen.getByRole('button');
     expect(button3).toHaveTextContent('Success!');
 
     act(() => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     const button4 = screen.getByRole('button');
@@ -176,14 +176,14 @@ describe('<AsyncButton /> component', () => {
     expect(button3).toHaveTextContent('Success!');
 
     act(() => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     const button4 = screen.getByRole('button');
     expect(button4).toHaveTextContent('Success!');
 
     act(() => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     const button5 = screen.getByRole('button');
