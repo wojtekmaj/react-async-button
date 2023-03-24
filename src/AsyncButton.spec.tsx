@@ -25,7 +25,7 @@ describe('<AsyncButton /> component', () => {
     pendingConfig,
     successConfig,
     errorConfig,
-  };
+  } satisfies React.ComponentProps<typeof AsyncButton>;
 
   let user: ReturnType<typeof userEvent.setup>;
   beforeEach(() => {
