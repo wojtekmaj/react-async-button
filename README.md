@@ -26,7 +26,6 @@ Add React-Async-Button to your project by executing `npm install @wojtekmaj/reac
 Here's an example of basic usage:
 
 ```js
-import React from 'react';
 import AsyncButton from '@wojtekmaj/react-async-button';
 
 const pendingConfig = {
