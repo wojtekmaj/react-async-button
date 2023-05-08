@@ -59,6 +59,46 @@ function MyComponent() {
 }
 ```
 
+### Usage with React Native
+
+AsyncButton renders `<button>` by default, but by passing `as` prop you can render any component you want. Here's the same example, but using `<TouchableOpacity>` instead of `<button>`:
+
+```js
+import { TouchableOpacity } from 'react-native';
+import AsyncButton from '@wojtekmaj/react-async-button';
+
+const pendingConfig = {
+  children: 'Loading…',
+  disabled: true,
+};
+
+const successConfig = {
+  children: 'Done',
+};
+
+const errorConfig = {
+  children: 'Try again',
+};
+
+function MyComponent() {
+  async function onClick(event) {
+    // Do some async stuff
+  }
+
+  return (
+    <AsyncButton
+      as={TouchableOpacity}
+      onClick={onClick}
+      pendingConfig={pendingConfig}
+      successConfig={successConfig}
+      errorConfig={errorConfig}
+    >
+      Do async stuff
+    </AsyncButton>
+  );
+}
+```
+
 ## User guide
 
 ### AsyncButton
