@@ -4,7 +4,7 @@ import makeCancellable from 'make-cancellable-promise';
 
 type Config<T extends React.ElementType> = React.ComponentPropsWithoutRef<T>;
 
-type AsyncButtonProps<T extends React.ElementType> = {
+export type AsyncButtonProps<T extends React.ElementType> = {
   as?: T;
   errorConfig?: Config<T>;
   onClick?: (event: React.MouseEvent) => void | Promise<void>;
