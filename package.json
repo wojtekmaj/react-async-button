@@ -2,14 +2,23 @@
   "name": "@wojtekmaj/react-async-button",
   "version": "1.4.0",
   "description": "A button that handles Promises for your React app.",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "source": "src/index.ts",
-  "types": "dist/cjs/index.d.ts",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "source": "./src/index.ts",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./src": "./src/index.ts"
+  },
   "scripts": {
     "build": "yarn build-esm && yarn build-cjs",
     "build-esm": "tsc --project tsconfig.build.json --outDir dist/esm --module esnext",
-    "build-cjs": "tsc --project tsconfig.build.json --outDir dist/cjs --module commonjs",
+    "build-cjs": "tsc --project tsconfig.build.json --outDir dist/cjs --module commonjs && echo '{\n  \"type\": \"commonjs\"\n}' > dist/cjs/package.json",
     "clean": "rimraf dist",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "postinstall": "husky install",
