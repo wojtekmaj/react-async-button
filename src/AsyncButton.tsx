@@ -7,20 +7,16 @@ type Config<T extends React.ElementType> = Omit<
   'as' | 'onClick'
 >;
 
-type EventTargetType<T extends React.ElementType> = T extends keyof HTMLElementTagNameMap
-  ? HTMLElementTagNameMap[T]
+type AsyncMaybe<T extends ((...args: any[]) => any) | unknown> = T extends (...args: any[]) => any
+  ? (...args: Parameters<T>) => ReturnType<T> | Promise<ReturnType<T>>
   : never;
 
-type EventType<T extends React.ElementType> = T extends React.ComponentType<{
-  onClick: (event: infer E) => void;
-}>
-  ? E
-  : React.MouseEvent<EventTargetType<T>, MouseEvent>;
+type OnClickType<T extends React.ElementType> = React.ComponentPropsWithoutRef<T>['onClick'];
 
 export type AsyncButtonProps<T extends React.ElementType> = {
   as?: T;
   errorConfig?: Config<T>;
-  onClick?: (event: EventType<T>) => void | Promise<void>;
+  onClick?: AsyncMaybe<OnClickType<T>>;
   pendingConfig?: Config<T>;
   resetTimeout?: number;
   successConfig?: Config<T>;
@@ -87,7 +83,7 @@ const AsyncButton = React.forwardRef(
         };
 
         try {
-          const result = onClick(event as EventType<T>);
+          const result = onClick(event);
           setButtonState(STATES.PENDING);
 
           if (result instanceof Promise) {
