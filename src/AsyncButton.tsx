@@ -113,7 +113,7 @@ const AsyncButton = React.forwardRef(
     return (
       <Component
         ref={ref}
-        onClick={onClick ? onClickInternal : null}
+        onClick={onClick ? onClickInternal : undefined}
         {...otherProps}
         {...buttonConfig}
       />
