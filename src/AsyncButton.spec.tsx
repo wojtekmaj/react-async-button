@@ -262,8 +262,17 @@ describe('<AsyncButton /> component', () => {
     <MyCustomComponent as={5} />;
   });
 
-  it('should allow HTMLButtonElement event handlers to be passed by default', () => {
+  it('should allow sync HTMLButtonElement event handlers to be passed by default', () => {
     function onClick(event: React.MouseEvent<HTMLButtonElement>) {
+      event.preventDefault();
+    }
+
+    // @ts-expect-no-error
+    <AsyncButton {...defaultProps} onClick={onClick} />;
+  });
+
+  it('should allow async HTMLButtonElement event handlers to be passed by default', () => {
+    async function onClick(event: React.MouseEvent<HTMLButtonElement>) {
       event.preventDefault();
     }
 
@@ -280,8 +289,17 @@ describe('<AsyncButton /> component', () => {
     <AsyncButton {...defaultProps} onClick={onClick} />;
   });
 
-  it('should allow HTMLButtonElement event handlers to be passed given as="button"', () => {
+  it('should allow sync HTMLButtonElement event handlers to be passed given as="button"', () => {
     function onClick(event: React.MouseEvent<HTMLButtonElement>) {
+      event.preventDefault();
+    }
+
+    // @ts-expect-no-error
+    <AsyncButton {...defaultProps} as="button" onClick={onClick} />;
+  });
+
+  it('should allow async HTMLButtonElement event handlers to be passed given as="button"', () => {
+    async function onClick(event: React.MouseEvent<HTMLButtonElement>) {
       event.preventDefault();
     }
 
@@ -302,8 +320,17 @@ describe('<AsyncButton /> component', () => {
     <button onClick={onClick}></button>;
   });
 
-  it('should allow HTMLAnchorElement event handlers to be passed given as="a"', () => {
+  it('should allow sync HTMLAnchorElement event handlers to be passed given as="a"', () => {
     function onClick(event: React.MouseEvent<HTMLAnchorElement>) {
+      event.preventDefault();
+    }
+
+    // @ts-expect-no-error
+    <AsyncButton {...defaultProps} as="a" onClick={onClick} />;
+  });
+
+  it('should allow async HTMLAnchorElement event handlers to be passed given as="a"', () => {
+    async function onClick(event: React.MouseEvent<HTMLAnchorElement>) {
       event.preventDefault();
     }
 
@@ -326,7 +353,7 @@ describe('<AsyncButton /> component', () => {
     </a>;
   });
 
-  it('should allow HTMLButtonElement event handlers to be passed given as={MyButton} that handles onClick', () => {
+  it('should allow sync HTMLButtonElement event handlers to be passed given as={MyButton} that handles onClick', () => {
     function MyButton({
       onClick,
     }: {
@@ -336,6 +363,23 @@ describe('<AsyncButton /> component', () => {
     }
 
     function onClick(event: React.MouseEvent<HTMLButtonElement>) {
+      event.preventDefault();
+    }
+
+    // @ts-expect-no-error
+    <AsyncButton {...defaultProps} as={MyButton} onClick={onClick} />;
+  });
+
+  it('should allow async HTMLButtonElement event handlers to be passed given as={MyButton} that handles onClick', () => {
+    function MyButton({
+      onClick,
+    }: {
+      onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    }) {
+      return <button onClick={onClick} type="submit"></button>;
+    }
+
+    async function onClick(event: React.MouseEvent<HTMLButtonElement>) {
       event.preventDefault();
     }
 
