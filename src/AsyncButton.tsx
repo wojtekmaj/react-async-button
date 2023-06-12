@@ -2,7 +2,10 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import makeCancellable from 'make-cancellable-promise';
 
-type Config<T extends React.ElementType> = React.ComponentPropsWithoutRef<T>;
+type Config<T extends React.ElementType> = Omit<
+  React.ComponentPropsWithoutRef<T>,
+  'as' | 'onClick'
+>;
 
 export type AsyncButtonProps<T extends React.ElementType> = {
   as?: T;
