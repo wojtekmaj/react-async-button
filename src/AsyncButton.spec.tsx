@@ -261,4 +261,123 @@ describe('<AsyncButton /> component', () => {
     // @ts-expect-error-next-line
     <MyCustomComponent as={5} />;
   });
+
+  it('should allow HTMLButtonElement event handlers to be passed by default', () => {
+    function onClick(event: React.MouseEvent<HTMLButtonElement>) {
+      event.preventDefault();
+    }
+
+    // @ts-expect-no-error
+    <AsyncButton {...defaultProps} onClick={onClick} />;
+  });
+
+  it('should not allow HTMLAnchorElement event handlers to be passed by default', () => {
+    function onClick(event: React.MouseEvent<HTMLAnchorElement>) {
+      event.preventDefault();
+    }
+
+    // @ts-expect-error-next-line
+    <AsyncButton {...defaultProps} onClick={onClick} />;
+  });
+
+  it('should allow HTMLButtonElement event handlers to be passed given as="button"', () => {
+    function onClick(event: React.MouseEvent<HTMLButtonElement>) {
+      event.preventDefault();
+    }
+
+    // @ts-expect-no-error
+    <AsyncButton {...defaultProps} as="button" onClick={onClick} />;
+  });
+
+  it('should not allow HTMLAnchorElement event handlers to be passed given as="button"', () => {
+    function onClick(event: React.MouseEvent<HTMLAnchorElement>) {
+      event.preventDefault();
+    }
+
+    // @ts-expect-error-next-line
+    <AsyncButton {...defaultProps} as="button" onClick={onClick} />;
+
+    // Sanity check
+    // @ts-expect-error-next-line
+    <button onClick={onClick}></button>;
+  });
+
+  it('should allow HTMLAnchorElement event handlers to be passed given as="a"', () => {
+    function onClick(event: React.MouseEvent<HTMLAnchorElement>) {
+      event.preventDefault();
+    }
+
+    // @ts-expect-no-error
+    <AsyncButton {...defaultProps} as="a" onClick={onClick} />;
+  });
+
+  it('should not allow HTMLButtonElement event handlers to be passed given as="a"', () => {
+    function onClick(event: React.MouseEvent<HTMLButtonElement>) {
+      event.preventDefault();
+    }
+
+    // @ts-expect-error-next-line
+    <AsyncButton {...defaultProps} as="a" onClick={onClick} />;
+
+    // Sanity check
+    // @ts-expect-error-next-line
+    <a href="https://example.com" onClick={onClick}>
+      Click me
+    </a>;
+  });
+
+  it('should allow HTMLButtonElement event handlers to be passed given as={MyButton} that handles onClick', () => {
+    function MyButton({
+      onClick,
+    }: {
+      onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    }) {
+      return <button onClick={onClick} type="submit"></button>;
+    }
+
+    function onClick(event: React.MouseEvent<HTMLButtonElement>) {
+      event.preventDefault();
+    }
+
+    // @ts-expect-no-error
+    <AsyncButton {...defaultProps} as={MyButton} onClick={onClick} />;
+  });
+
+  it('should allow HTMLAnchorElement event handlers to be passed given as={MyAnchor} that handles onClick', () => {
+    function MyAnchor({
+      onClick,
+    }: {
+      onClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    }) {
+      return (
+        <a href="https://example.com" onClick={onClick}>
+          Click me
+        </a>
+      );
+    }
+
+    function onClick(event: React.MouseEvent<HTMLAnchorElement>) {
+      event.preventDefault();
+    }
+
+    // @ts-expect-no-error
+    <AsyncButton {...defaultProps} as={MyAnchor} onClick={onClick} />;
+  });
+
+  it('should not allow event handlers to be passed given as={MyButton} that does not handle onClick', () => {
+    function MyAnchor() {
+      return <a href="https://example.com">Click me</a>;
+    }
+
+    function onClick(event: React.MouseEvent<HTMLAnchorElement>) {
+      event.preventDefault();
+    }
+
+    // @ts-expect-error-next-line
+    <AsyncButton {...defaultProps} as={MyAnchor} onClick={onClick} />;
+
+    // Sanity check
+    // @ts-expect-error-next-line
+    <MyAnchor onClick={onClick} />;
+  });
 });
