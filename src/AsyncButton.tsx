@@ -7,7 +7,10 @@ type Config<T extends React.ElementType> = Omit<
   'as' | 'onClick'
 >;
 
-type AsyncMaybe<T extends ((...args: any[]) => any) | unknown> = T extends (...args: any[]) => any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyFunction = (...args: any[]) => void;
+
+type AsyncMaybe<T extends AnyFunction | unknown> = T extends AnyFunction
   ? (...args: Parameters<T>) => ReturnType<T> | Promise<ReturnType<T>>
   : never;
 
