@@ -656,11 +656,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@wojtekmaj/react-async-button@portal:../::locator=react-async-button-test-page%40workspace%3A."
   dependencies:
-    "@types/react": "*"
     make-cancellable-promise: ^1.3.1
     prop-types: ^15.6.0
   peerDependencies:
+    "@types/react": ^16.8.0 || ^17.0.0 || ^18.0.0
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
   languageName: node
   linkType: soft
 
