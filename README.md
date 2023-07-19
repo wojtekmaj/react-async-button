@@ -25,7 +25,7 @@ Add React-Async-Button to your project by executing `npm install @wojtekmaj/reac
 
 Here's an example of basic usage:
 
-```js
+```tsx
 import AsyncButton from '@wojtekmaj/react-async-button';
 
 const pendingConfig = {
@@ -63,7 +63,7 @@ function MyComponent() {
 
 AsyncButton renders `<button>` by default, but by passing `as` prop you can render any component you want. Here's the same example, but using `<TouchableOpacity>` instead of `<button>`:
 
-```js
+```tsx
 import { TouchableOpacity } from 'react-native';
 import AsyncButton from '@wojtekmaj/react-async-button';
 
