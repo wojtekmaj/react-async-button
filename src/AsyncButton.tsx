@@ -154,5 +154,5 @@ AsyncButton.propTypes = {
 };
 
 export default AsyncButton as <T extends React.ElementType = 'button'>(
-  props: AsyncButtonProps<T> & { ref?: PolymorphicRef<T> },
+  props: AsyncButtonProps<T> & React.RefAttributes<React.ElementRef<T>>,
 ) => React.ReactElement | null;
