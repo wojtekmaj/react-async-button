@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import makeCancellable from 'make-cancellable-promise';
 
@@ -36,7 +36,7 @@ const STATES = {
   SUCCESS: 'success',
 } as const;
 
-const AsyncButton = React.forwardRef(
+const AsyncButton = forwardRef(
   <T extends React.ElementType = 'button'>(
     {
       as,
