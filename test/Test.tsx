@@ -3,7 +3,7 @@ import AsyncButton from '@wojtekmaj/react-async-button/src';
 
 import './Test.css';
 
-import { Button } from './button.styles';
+import { Button } from './button.styles.js';
 
 const pendingConfig = {
   children: 'Loading…',
