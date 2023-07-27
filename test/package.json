@@ -1,5 +1,5 @@
 {
-  "name": "react-async-button-test-page",
+  "name": "test",
   "version": "1.0.0",
   "description": "A test page for React-Async-Button.",
   "private": true,
@@ -7,7 +7,11 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite serve",
-    "preview": "vite preview"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "prettier": "prettier --check . --cache",
+    "preview": "vite preview",
+    "test": "yarn lint && yarn tsc && yarn prettier",
+    "tsc": "tsc --noEmit"
   },
   "author": {
     "name": "Wojciech Maj",
@@ -15,7 +19,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@wojtekmaj/react-async-button": "portal:../",
+    "@wojtekmaj/react-async-button": "workspace:package",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
@@ -23,8 +27,12 @@
   },
   "devDependencies": {
     "@types/babel__core": "^7.20.0",
+    "@types/react": "*",
     "@types/styled-components": "^5.1.26",
     "@vitejs/plugin-react": "^3.0.0",
+    "eslint": "^8.26.0",
+    "eslint-config-wojtekmaj": "^0.9.0",
+    "prettier": "^2.7.0",
     "typescript": "^5.0.0",
     "vite": "^4.0.0"
   }

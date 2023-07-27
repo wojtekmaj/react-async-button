@@ -1,5 +1,5 @@
 import React from 'react';
-import AsyncButton from '@wojtekmaj/react-async-button/src';
+import AsyncButton from '@wojtekmaj/react-async-button';
 
 import './Test.css';
 
