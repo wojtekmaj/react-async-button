@@ -2,7 +2,6 @@
 
 import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import makeCancellable from 'make-cancellable-promise';
 
 type Config<T extends React.ElementType> = Omit<
   React.ComponentPropsWithoutRef<T>,
@@ -49,14 +48,12 @@ const AsyncButton = forwardRef(function AsyncButton<T extends React.ElementType 
   ref?: PolymorphicRef<T>,
 ) {
   const [buttonState, setButtonState] = useState<(typeof STATES)[keyof typeof STATES]>(STATES.INIT);
-  const cancellablePromise = useRef<ReturnType<typeof makeCancellable>>();
+  const abortController = useRef(new AbortController());
   const timeout = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(
     () => () => {
-      if (cancellablePromise.current) {
-        cancellablePromise.current.cancel();
-      }
+      abortController.current.abort();
       clearTimeout(timeout.current);
     },
     [],
@@ -89,11 +86,15 @@ const AsyncButton = forwardRef(function AsyncButton<T extends React.ElementType 
         setButtonState(STATES.PENDING);
 
         if (result instanceof Promise) {
-          cancellablePromise.current = makeCancellable(result);
-          cancellablePromise.current.promise
-            .then(onSuccess)
-            .catch(onError)
-            .finally(finallyCallback);
+          const { signal } = abortController.current;
+
+          const wrappedPromise = new Promise((resolve, reject) => {
+            result
+              .then((value) => !signal.aborted && resolve(value))
+              .catch((error) => !signal.aborted && reject(error));
+          });
+
+          wrappedPromise.then(onSuccess).catch(onError).finally(finallyCallback);
         } else {
           onSuccess();
           finallyCallback();
