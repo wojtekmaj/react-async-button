@@ -19,7 +19,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@wojtekmaj/react-async-button": "workspace:package",
+    "@wojtekmaj/react-async-button": "workspace:packages/react-async-button",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",

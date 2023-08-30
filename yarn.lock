@@ -1197,9 +1197,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wojtekmaj/react-async-button@workspace:package":
+"@wojtekmaj/react-async-button@workspace:packages/react-async-button":
   version: 0.0.0-use.local
-  resolution: "@wojtekmaj/react-async-button@workspace:package"
+  resolution: "@wojtekmaj/react-async-button@workspace:packages/react-async-button"
   dependencies:
     "@testing-library/dom": ^9.0.0
     "@testing-library/jest-dom": ^5.15.0
@@ -5378,7 +5378,7 @@ __metadata:
     "@types/react": "*"
     "@types/styled-components": ^5.1.26
     "@vitejs/plugin-react": ^3.0.0
-    "@wojtekmaj/react-async-button": "workspace:package"
+    "@wojtekmaj/react-async-button": "workspace:packages/react-async-button"
     eslint: ^8.26.0
     eslint-config-wojtekmaj: ^0.9.0
     prettier: ^2.7.0
