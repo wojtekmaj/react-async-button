@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import React, { createRef } from 'react';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import styled from 'styled-components';
 
 import AsyncButton from './index.js';
 
@@ -230,6 +231,24 @@ describe('<AsyncButton /> component', () => {
     </a>;
   });
 
+  it('should allow button props to be passed given as={styled.button}', () => {
+    const Button = styled.button``;
+
+    // @ts-expect-no-error
+    <AsyncButton {...defaultProps} as={Button} disabled />;
+  });
+
+  it('should not allow link props to be passed given as={styled.button}', () => {
+    const Button = styled.button``;
+
+    // @ts-expect-error-next-line
+    <AsyncButton {...defaultProps} as={Button} href="https://example.com" />;
+
+    // Sanity check
+    // @ts-expect-error-next-line
+    <button href="https://example.com"></button>;
+  });
+
   it('should not allow button props to be passed given as={MyButton}', () => {
     function MyButton() {
       return <button type="submit"></button>;
@@ -351,6 +370,43 @@ describe('<AsyncButton /> component', () => {
     <a href="https://example.com" onClick={onClick}>
       Click me
     </a>;
+  });
+
+  it('should allow sync HTMLButtonElement event handlers to be passed given as={styled.button}', () => {
+    const Button = styled.button``;
+
+    function onClick(event: React.MouseEvent<HTMLButtonElement>) {
+      event.preventDefault();
+    }
+
+    // @ts-expect-no-error
+    <AsyncButton {...defaultProps} as={Button} onClick={onClick} />;
+  });
+
+  it('should allow async HTMLButtonElement event handlers to be passed given as={styled.button}', () => {
+    const Button = styled.button``;
+
+    async function onClick(event: React.MouseEvent<HTMLButtonElement>) {
+      event.preventDefault();
+    }
+
+    // @ts-expect-no-error
+    <AsyncButton {...defaultProps} as={Button} onClick={onClick} />;
+  });
+
+  it('should not allow HTMLAnchorElement event handlers to be passed given as={styled.button}', () => {
+    const Button = styled.button``;
+
+    function onClick(event: React.MouseEvent<HTMLAnchorElement>) {
+      event.preventDefault();
+    }
+
+    // @ts-expect-error-next-line
+    <AsyncButton {...defaultProps} as={Button} onClick={onClick} />;
+
+    // Sanity check
+    // @ts-expect-error-next-line
+    <button onClick={onClick}></button>;
   });
 
   it('should allow sync HTMLButtonElement event handlers to be passed given as={MyButton} that handles onClick', () => {
