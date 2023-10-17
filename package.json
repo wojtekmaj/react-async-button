@@ -16,7 +16,7 @@
     "prettier": "yarn workspaces foreach --all run prettier",
     "test": "yarn workspaces foreach --all run test",
     "tsc": "yarn workspaces foreach --all run tsc",
-    "tsc:node16": "yarn workspaces foreach --all run tsc:node16",
+    "tsc:nodenext": "yarn workspaces foreach --all run tsc:nodenext",
     "unit": "yarn workspaces foreach --all run unit"
   },
   "devDependencies": {
