@@ -30,7 +30,7 @@ describe('<AsyncButton /> component', () => {
   let user: ReturnType<typeof userEvent.setup>;
   beforeEach(() => {
     // See https://github.com/testing-library/react-testing-library/issues/1195
-    (globalThis.jest as Record<string, unknown>) = {
+    (globalThis as Record<string, unknown>).jest = {
       advanceTimersByTime: vi.advanceTimersByTime.bind(vi),
     };
 
