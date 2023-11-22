@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/@wojtekmaj/react-async-button.svg)](https://www.npmjs.com/package/@wojtekmaj/react-async-button) ![downloads](https://img.shields.io/npm/dt/@wojtekmaj/react-async-button.svg) [![CI](https://github.com/wojtekmaj/react-async-button/workflows/CI/badge.svg)](https://github.com/wojtekmaj/react-async-button/actions)
+[![npm](https://img.shields.io/npm/v/@wojtekmaj/react-async-button.svg)](https://www.npmjs.com/package/@wojtekmaj/react-async-button) ![downloads](https://img.shields.io/npm/dt/@wojtekmaj/react-async-button.svg) [![CI](https://github.com/wojtekmaj/react-async-button/actions/workflows/ci.yml/badge.svg)](https://github.com/wojtekmaj/react-async-button/actions)
 
 # @wojtekmaj/react-async-button
 
