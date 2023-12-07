@@ -19,11 +19,41 @@ type AsyncMaybe<T extends AnyFunction | unknown> = T extends AnyFunction
 type OnClickType<T extends React.ElementType> = React.ComponentPropsWithoutRef<T>['onClick'];
 
 export type AsyncButtonProps<T extends React.ElementType> = {
+  /**
+   * Component to render button with.
+   */
   as?: T;
+  /**
+   * Props to override default props with when `onClick` async function throws.
+   *
+   * @default {}
+   * @example { children: 'Try again' }
+   */
   errorConfig?: Config<T>;
+  /**
+   * A function, a function returning a Promise, or an async function to be called when the button is clicked.
+   */
   onClick?: AsyncMaybe<OnClickType<T>>;
+  /**
+   * Props to override default props when button has been clicked but `onClick` function did not yet resolve.
+   *
+   * @default {}
+   * @example { children: 'Loading…' }
+   */
   pendingConfig?: Config<T>;
+  /**
+   * Time in milliseconds after which AsyncButton should stop using `errorConfig` / `successConfig` overrides.
+   *
+   * @default 2000
+   * @example 5000
+   */
   resetTimeout?: number;
+  /**
+   * Props to override default props with when `onClick` async function resolves.
+   *
+   * @default {}
+   * @example { children: 'Done' }
+   */
   successConfig?: Config<T>;
 } & Config<T>;
 
@@ -36,6 +66,9 @@ const STATES = {
   SUCCESS: 'success',
 } as const;
 
+/**
+ * Renders a button.
+ */
 const AsyncButton = forwardRef(function AsyncButton<T extends React.ElementType = 'button'>(
   {
     as,
