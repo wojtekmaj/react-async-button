@@ -957,13 +957,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:*":
-  version: 15.7.5
-  resolution: "@types/prop-types@npm:15.7.5"
-  checksum: 10c0/648aae41423821c61c83823ae36116c8d0f68258f8b609bdbc257752dcd616438d6343d554262aa9a7edaee5a19aca2e028a74fa2d0f40fffaf2816bc7056857
-  languageName: node
-  linkType: hard
-
 "@types/react-dom@npm:^18.0.0":
   version: 18.0.11
   resolution: "@types/react-dom@npm:18.0.11"
@@ -973,21 +966,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*":
-  version: 18.0.31
-  resolution: "@types/react@npm:18.0.31"
+"@types/react@npm:types-react@alpha":
+  version: 19.0.0-alpha.5
+  resolution: "types-react@npm:19.0.0-alpha.5"
   dependencies:
-    "@types/prop-types": "npm:*"
-    "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 10c0/608b7fe96cbbc16458a1874c79843da8e6732d79894eca60368ded6f28a5a659e935933f2ed99ec1b7331834ca23ac22be37aed2f49f6ad3081dfe00f34a7d80
-  languageName: node
-  linkType: hard
-
-"@types/scheduler@npm:*":
-  version: 0.16.3
-  resolution: "@types/scheduler@npm:0.16.3"
-  checksum: 10c0/c249d4b96fa05165ac22c214f94a045ee0af8beedefdbc54b769febd0044cab3a874e55419841a0dcc76439e379a63e257f3253c87168e3261e7bc783d623302
+  checksum: 10c0/c821d10f1178e0dca6dd353435e5b4af29b8333dea68810b7bacfe09988227a9d28706e00752957da82a7d220608e13549729224f8b467ddc1ffc5643255fa20
   languageName: node
   linkType: hard
 
@@ -1215,14 +1199,14 @@ __metadata:
     "@testing-library/jest-dom": "npm:^6.0.0"
     "@testing-library/react": "npm:^15.0.0"
     "@testing-library/user-event": "npm:^14.5.0"
-    "@types/react": "npm:*"
+    "@types/react": "npm:types-react@alpha"
     eslint: "npm:^8.56.0"
     eslint-config-wojtekmaj: "npm:^1.0.0"
     happy-dom: "npm:^12.6.0"
     make-cancellable-promise: "npm:^1.3.1"
     prettier: "npm:^3.2.0"
-    react: "npm:^18.2.0"
-    react-dom: "npm:^18.2.0"
+    react: "npm:19.0.0-beta-94eed63c49-20240425"
+    react-dom: "npm:19.0.0-beta-94eed63c49-20240425"
     rimraf: "npm:^3.0.0"
     typescript: "npm:^5.4.2"
     vitest: "npm:^1.0.2"
@@ -3000,7 +2984,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
+"loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -3687,15 +3671,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"react-dom@npm:^18.2.0":
-  version: 18.2.0
-  resolution: "react-dom@npm:18.2.0"
+"react-dom@npm:19.0.0-beta-94eed63c49-20240425":
+  version: 19.0.0-beta-94eed63c49-20240425
+  resolution: "react-dom@npm:19.0.0-beta-94eed63c49-20240425"
   dependencies:
-    loose-envify: "npm:^1.1.0"
-    scheduler: "npm:^0.23.0"
+    scheduler: "npm:0.25.0-beta-94eed63c49-20240425"
   peerDependencies:
-    react: ^18.2.0
-  checksum: 10c0/66dfc5f93e13d0674e78ef41f92ed21dfb80f9c4ac4ac25a4b51046d41d4d2186abc915b897f69d3d0ebbffe6184e7c5876f2af26bfa956f179225d921be713a
+    react: 19.0.0-beta-94eed63c49-20240425
+  checksum: 10c0/9dd0c64f82803f2ce90d8ff3a84df491ddb93aaca70ef3b19b298566d485717c0b7ed9edc0285706bf659aae5ed02a77e98572b6e4e4664172a172195b7bba15
   languageName: node
   linkType: hard
 
@@ -3727,12 +3710,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18.2.0":
-  version: 18.2.0
-  resolution: "react@npm:18.2.0"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10c0/b562d9b569b0cb315e44b48099f7712283d93df36b19a39a67c254c6686479d3980b7f013dc931f4a5a3ae7645eae6386b4aa5eea933baa54ecd0f9acb0902b8
+"react@npm:19.0.0-beta-94eed63c49-20240425":
+  version: 19.0.0-beta-94eed63c49-20240425
+  resolution: "react@npm:19.0.0-beta-94eed63c49-20240425"
+  checksum: 10c0/027ec7fb541b8960dd0f853e7f30ce579a6a812df688a734b43b986e791f711e8ba6960981d4949ed18776aa9bd45b85526d1aeead8ebccd4cf8c002ca9a16e6
   languageName: node
   linkType: hard
 
@@ -3937,12 +3918,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.23.0":
-  version: 0.23.0
-  resolution: "scheduler@npm:0.23.0"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10c0/b777f7ca0115e6d93e126ac490dbd82642d14983b3079f58f35519d992fa46260be7d6e6cede433a92db70306310c6f5f06e144f0e40c484199e09c1f7be53dd
+"scheduler@npm:0.25.0-beta-94eed63c49-20240425":
+  version: 0.25.0-beta-94eed63c49-20240425
+  resolution: "scheduler@npm:0.25.0-beta-94eed63c49-20240425"
+  checksum: 10c0/4d950204134df133f66e2df84f1a59119f9d672bb736fb5eae1cc18e208b46b5f282f43e82d610c748654a555a2f5459937474c13bc10512cab47bb3235f9034
   languageName: node
   linkType: hard
 
@@ -4266,15 +4245,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "test@workspace:test"
   dependencies:
-    "@types/react": "npm:*"
+    "@types/react": "npm:types-react@alpha"
     "@types/styled-components": "npm:^5.1.26"
     "@vitejs/plugin-react": "npm:^4.2.0"
     "@wojtekmaj/react-async-button": "workspace:packages/react-async-button"
     eslint: "npm:^8.56.0"
     eslint-config-wojtekmaj: "npm:^1.0.0"
     prettier: "npm:^3.2.0"
-    react: "npm:^18.2.0"
-    react-dom: "npm:^18.2.0"
+    react: "npm:19.0.0-beta-94eed63c49-20240425"
+    react-dom: "npm:19.0.0-beta-94eed63c49-20240425"
     react-is: "npm:^18.2.0"
     styled-components: "npm:^5.3.0"
     typescript: "npm:^5.4.2"

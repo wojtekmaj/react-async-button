@@ -24,6 +24,7 @@
     "prettier": "^3.2.0"
   },
   "resolutions": {
+    "@types/react": "npm:types-react@alpha",
     "eslint-plugin-import": "npm:eslint-plugin-i@^2.28.0"
   },
   "packageManager": "yarn@4.1.1"

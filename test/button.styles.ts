@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+// @ts-expect-error-next-line - Not compatible with React 19 yet
 export const Button = styled.button`
   background: transparent;
   border-radius: 3px;
