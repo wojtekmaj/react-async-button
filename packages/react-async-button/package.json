@@ -1,6 +1,6 @@
 {
   "name": "@wojtekmaj/react-async-button",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "description": "A button that handles Promises for your React app.",
   "type": "module",
   "sideEffects": false,
