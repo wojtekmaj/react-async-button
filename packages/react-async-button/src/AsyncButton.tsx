@@ -81,8 +81,8 @@ const AsyncButton = forwardRef(function AsyncButton<T extends React.ElementType 
   ref?: PolymorphicRef<T>,
 ) {
   const [buttonState, setButtonState] = useState<(typeof STATES)[keyof typeof STATES]>(STATES.INIT);
-  const cancellablePromise = useRef<ReturnType<typeof makeCancellable>>();
-  const timeout = useRef<ReturnType<typeof setTimeout>>();
+  const cancellablePromise = useRef<ReturnType<typeof makeCancellable> | undefined>(undefined);
+  const timeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   useEffect(
     () => () => {
