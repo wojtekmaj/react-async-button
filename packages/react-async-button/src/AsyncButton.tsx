@@ -1,7 +1,6 @@
 'use client';
 
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import makeCancellable from 'make-cancellable-promise';
 
 type Config<T extends React.ElementType> = Omit<
@@ -165,22 +164,6 @@ const AsyncButton = forwardRef(function AsyncButton<T extends React.ElementType 
 });
 
 AsyncButton.displayName = 'AsyncButton';
-
-const configProps = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-};
-
-const isConfigObject = PropTypes.shape(configProps);
-
-AsyncButton.propTypes = {
-  ...configProps,
-  errorConfig: isConfigObject,
-  onClick: PropTypes.func,
-  pendingConfig: isConfigObject,
-  resetTimeout: PropTypes.number,
-  successConfig: isConfigObject,
-};
 
 export default AsyncButton as <T extends React.ElementType = 'button'>(
   props: AsyncButtonProps<T> & React.RefAttributes<React.ElementRef<T>>,
