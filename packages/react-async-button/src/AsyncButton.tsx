@@ -8,7 +8,7 @@ type Config<T extends React.ElementType> = Omit<
   'as' | 'onClick'
 >;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: Impossible to type
 type AnyFunction = (...args: any[]) => void;
 
 type AsyncMaybe<T extends AnyFunction | unknown> = T extends AnyFunction
