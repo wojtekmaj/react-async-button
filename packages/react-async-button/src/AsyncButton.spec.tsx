@@ -211,7 +211,7 @@ describe('<AsyncButton /> component', () => {
 
     // Sanity check
     // @ts-expect-error-next-line
-    <button href="https://example.com"></button>;
+    <button href="https://example.com" type="submit" />;
   });
 
   it('should allow link props to be passed given as="a"', () => {
@@ -232,7 +232,7 @@ describe('<AsyncButton /> component', () => {
 
   it('should not allow button props to be passed given as={MyButton}', () => {
     function MyButton() {
-      return <button type="submit"></button>;
+      return <button type="submit" />;
     }
 
     // @ts-expect-error-next-line
@@ -317,7 +317,7 @@ describe('<AsyncButton /> component', () => {
 
     // Sanity check
     // @ts-expect-error-next-line
-    <button onClick={onClick}></button>;
+    <button onClick={onClick} type="submit" />;
   });
 
   it('should allow sync HTMLAnchorElement event handlers to be passed given as="a"', () => {
@@ -359,7 +359,7 @@ describe('<AsyncButton /> component', () => {
     }: {
       onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
     }) {
-      return <button onClick={onClick} type="submit"></button>;
+      return <button onClick={onClick} type="submit" />;
     }
 
     function onClick(event: React.MouseEvent<HTMLButtonElement>) {
@@ -376,7 +376,7 @@ describe('<AsyncButton /> component', () => {
     }: {
       onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
     }) {
-      return <button onClick={onClick} type="submit"></button>;
+      return <button onClick={onClick} type="submit" />;
     }
 
     async function onClick(event: React.MouseEvent<HTMLButtonElement>) {
