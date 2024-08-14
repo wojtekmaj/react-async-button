@@ -130,7 +130,7 @@ const AsyncButton = forwardRef(function AsyncButton<T extends React.ElementType 
           onSuccess();
           finallyCallback();
         }
-      } catch (error) {
+      } catch {
         onError();
         finallyCallback();
       }
