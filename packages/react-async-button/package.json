@@ -20,7 +20,7 @@
     "test": "yarn lint && yarn tsc && yarn format && yarn unit",
     "tsc": "tsc",
     "unit": "vitest",
-    "watch": "yarn build-esm --watch & yarn build-cjs --watch & yarn build-cjs-package"
+    "watch": "yarn build --watch"
   },
   "keywords": [
     "react",
