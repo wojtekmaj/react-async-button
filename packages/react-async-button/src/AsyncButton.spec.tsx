@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { userEvent } from '@vitest/browser/context';
+import { describe, expect, it, vi } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
 import { createRef } from 'react';
 
 import AsyncButton from './index.js';
@@ -28,18 +28,6 @@ describe('<AsyncButton /> component', () => {
     errorConfig,
   } satisfies React.ComponentProps<typeof AsyncButton>;
 
-  let user: ReturnType<typeof userEvent.setup>;
-  beforeEach(() => {
-    // See https://github.com/testing-library/react-testing-library/issues/1195
-    (globalThis as Record<string, unknown>).jest = {
-      advanceTimersByTime: vi.advanceTimersByTime.bind(vi),
-    };
-
-    user = userEvent.setup({
-      advanceTimers: vi.advanceTimersByTime.bind(vi),
-    });
-  });
-
   it('renders button properly', () => {
     render(<AsyncButton {...defaultProps} />);
 
@@ -63,7 +51,7 @@ describe('<AsyncButton /> component', () => {
 
     const button = screen.getByRole('button');
 
-    await user.click(button);
+    await userEvent.click(button);
 
     expect(onClick).toHaveBeenCalledTimes(1);
     expect(onClick).toHaveBeenCalledWith(expect.any(Object));
@@ -78,7 +66,7 @@ describe('<AsyncButton /> component', () => {
 
     const button = screen.getByRole('button');
 
-    await user.click(button);
+    await userEvent.click(button);
 
     const button2 = screen.getByRole('button');
     expect(button2).toHaveTextContent('Success!');
@@ -93,7 +81,7 @@ describe('<AsyncButton /> component', () => {
 
     const button = screen.getByRole('button');
 
-    await user.click(button);
+    await userEvent.click(button);
 
     const button2 = screen.getByRole('button');
     expect(button2).toHaveTextContent('Success!');
@@ -124,7 +112,7 @@ describe('<AsyncButton /> component', () => {
 
     const button = screen.getByRole('button');
 
-    await user.click(button);
+    await userEvent.click(button);
 
     const button2 = screen.getByRole('button');
     expect(button2).toHaveTextContent('Loading…');
@@ -145,7 +133,7 @@ describe('<AsyncButton /> component', () => {
 
     const button = screen.getByRole('button');
 
-    await user.click(button);
+    await userEvent.click(button);
 
     const button2 = screen.getByRole('button');
     expect(button2).toHaveTextContent('Loading…');
@@ -169,7 +157,7 @@ describe('<AsyncButton /> component', () => {
 
     const button = screen.getByRole('button');
 
-    await user.click(button);
+    await userEvent.click(button);
 
     const button2 = screen.getByRole('button');
     expect(button2).toHaveTextContent('Loading…');
