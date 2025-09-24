@@ -5,7 +5,6 @@ import { createRef } from 'react';
 
 import AsyncButton from './index.js';
 
-// biome-ignore lint/correctness/useHookAtTopLevel: False positive, see https://github.com/biomejs/biome/issues/6396
 vi.useFakeTimers();
 
 const pendingConfig = {
