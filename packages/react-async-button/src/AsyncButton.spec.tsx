@@ -184,12 +184,10 @@ describe('<AsyncButton /> component', () => {
   });
 
   it('should allow button props to be passed by default', () => {
-    // @ts-expect-no-error
     <AsyncButton {...defaultProps} type="submit" />;
   });
 
   it('should allow button props to be passed given as="button"', () => {
-    // @ts-expect-no-error
     <AsyncButton {...defaultProps} as="button" disabled />;
   });
 
@@ -203,7 +201,6 @@ describe('<AsyncButton /> component', () => {
   });
 
   it('should allow link props to be passed given as="a"', () => {
-    // @ts-expect-no-error
     <AsyncButton {...defaultProps} as="a" href="https://example.com" />;
   });
 
@@ -255,7 +252,6 @@ describe('<AsyncButton /> component', () => {
       event.preventDefault();
     }
 
-    // @ts-expect-no-error
     <AsyncButton {...defaultProps} onClick={onClick} />;
   });
 
@@ -264,7 +260,6 @@ describe('<AsyncButton /> component', () => {
       event.preventDefault();
     }
 
-    // @ts-expect-no-error
     <AsyncButton {...defaultProps} onClick={onClick} />;
   });
 
@@ -282,7 +277,6 @@ describe('<AsyncButton /> component', () => {
       event.preventDefault();
     }
 
-    // @ts-expect-no-error
     <AsyncButton {...defaultProps} as="button" onClick={onClick} />;
   });
 
@@ -291,7 +285,6 @@ describe('<AsyncButton /> component', () => {
       event.preventDefault();
     }
 
-    // @ts-expect-no-error
     <AsyncButton {...defaultProps} as="button" onClick={onClick} />;
   });
 
@@ -313,7 +306,6 @@ describe('<AsyncButton /> component', () => {
       event.preventDefault();
     }
 
-    // @ts-expect-no-error
     <AsyncButton {...defaultProps} as="a" onClick={onClick} />;
   });
 
@@ -322,7 +314,6 @@ describe('<AsyncButton /> component', () => {
       event.preventDefault();
     }
 
-    // @ts-expect-no-error
     <AsyncButton {...defaultProps} as="a" onClick={onClick} />;
   });
 
@@ -354,7 +345,6 @@ describe('<AsyncButton /> component', () => {
       event.preventDefault();
     }
 
-    // @ts-expect-no-error
     <AsyncButton {...defaultProps} as={MyButton} onClick={onClick} />;
   });
 
@@ -371,7 +361,6 @@ describe('<AsyncButton /> component', () => {
       event.preventDefault();
     }
 
-    // @ts-expect-no-error
     <AsyncButton {...defaultProps} as={MyButton} onClick={onClick} />;
   });
 
@@ -392,7 +381,6 @@ describe('<AsyncButton /> component', () => {
       event.preventDefault();
     }
 
-    // @ts-expect-no-error
     <AsyncButton {...defaultProps} as={MyAnchor} onClick={onClick} />;
   });
 
