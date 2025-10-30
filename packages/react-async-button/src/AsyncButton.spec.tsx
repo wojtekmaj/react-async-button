@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
-import { userEvent } from 'vitest/browser';
-import { act, render, screen } from '@testing-library/react';
+import { page, userEvent } from 'vitest/browser';
+import { render } from 'vitest-browser-react';
 import { createRef } from 'react';
 
 import AsyncButton from './index.js';
@@ -27,28 +27,28 @@ describe('<AsyncButton /> component', () => {
     errorConfig,
   } satisfies React.ComponentProps<typeof AsyncButton>;
 
-  it('renders button properly', () => {
-    render(<AsyncButton {...defaultProps} />);
+  it('renders button properly', async () => {
+    await render(<AsyncButton {...defaultProps} />);
 
-    expect(screen.queryByRole('button')).toBeInTheDocument();
+    expect(page.getByRole('button')).toBeInTheDocument();
   });
 
-  it('passes ref correctly', () => {
+  it('passes ref correctly', async () => {
     const ref = createRef<HTMLButtonElement>();
 
-    render(<AsyncButton {...defaultProps} ref={ref} />);
+    await render(<AsyncButton {...defaultProps} ref={ref} />);
 
-    const button = screen.getByRole('button');
+    const button = page.getByRole('button');
 
-    expect(ref.current).toBe(button);
+    expect(ref.current).toBe(button.element());
   });
 
   it('calls onClick properly', async () => {
     const onClick = vi.fn();
 
-    render(<AsyncButton {...defaultProps} onClick={onClick} />);
+    await render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
-    const button = screen.getByRole('button');
+    const button = page.getByRole('button');
 
     await userEvent.click(button);
 
@@ -61,13 +61,13 @@ describe('<AsyncButton /> component', () => {
       // Intentionally empty
     };
 
-    render(<AsyncButton {...defaultProps} onClick={onClick} />);
+    await render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
-    const button = screen.getByRole('button');
+    const button = page.getByRole('button');
 
     await userEvent.click(button);
 
-    const button2 = screen.getByRole('button');
+    const button2 = page.getByRole('button');
     expect(button2).toHaveTextContent('Success!');
   });
 
@@ -76,111 +76,84 @@ describe('<AsyncButton /> component', () => {
       // Intentionally empty
     };
 
-    render(<AsyncButton {...defaultProps} onClick={onClick} />);
+    await render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
-    const button = screen.getByRole('button');
+    const button = page.getByRole('button');
 
     await userEvent.click(button);
 
-    const button2 = screen.getByRole('button');
-    expect(button2).toHaveTextContent('Success!');
+    await expect.element(button).toHaveTextContent('Success!');
 
-    act(() => {
-      vi.advanceTimersByTime(1000);
-    });
+    vi.advanceTimersByTime(1000);
 
-    const button3 = screen.getByRole('button');
-    expect(button3).toHaveTextContent('Success!');
+    await expect.element(button).toHaveTextContent('Success!');
 
-    act(() => {
-      vi.advanceTimersByTime(1000);
-    });
+    vi.advanceTimersByTime(1000);
 
-    const button4 = screen.getByRole('button');
-    expect(button4).toHaveTextContent('Click me');
+    await expect.element(button).toHaveTextContent('Click me');
   });
 
   it('changes button state to pending on click if onClick is asynchronous', async () => {
-    let resolve: () => void;
     const onClick = () =>
-      new Promise<void>((res) => {
-        resolve = res;
+      new Promise<void>(() => {
+        // Intentionally empty
       });
 
-    render(<AsyncButton {...defaultProps} onClick={onClick} />);
+    await render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
-    const button = screen.getByRole('button');
+    const button = page.getByRole('button');
 
     await userEvent.click(button);
 
-    const button2 = screen.getByRole('button');
-    expect(button2).toHaveTextContent('Loading…');
-
-    await act(async () => {
-      resolve();
-    });
+    await expect.element(button).toHaveTextContent('Loading…');
   });
 
   it('changes button state to success after asynchronous onClick is resolved', async () => {
-    let resolve: () => void;
+    let resolve: (() => void) | undefined;
     const onClick = () =>
       new Promise<void>((res) => {
         resolve = res;
       });
 
-    render(<AsyncButton {...defaultProps} onClick={onClick} />);
+    await render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
-    const button = screen.getByRole('button');
+    const button = page.getByRole('button');
 
     await userEvent.click(button);
 
-    const button2 = screen.getByRole('button');
-    expect(button2).toHaveTextContent('Loading…');
+    await expect.element(button).toHaveTextContent('Loading…');
 
-    await act(async () => {
-      resolve();
-    });
+    resolve?.();
 
-    const button3 = screen.getByRole('button');
-    expect(button3).toHaveTextContent('Success!');
+    await expect.element(button).toHaveTextContent('Success!');
   });
 
   it('changes button state to default after refresh timeout has passed', async () => {
-    let resolve: () => void;
+    let resolve: (() => void) | undefined;
     const onClick = () =>
       new Promise<void>((res) => {
         resolve = res;
       });
 
-    render(<AsyncButton {...defaultProps} onClick={onClick} />);
+    await render(<AsyncButton {...defaultProps} onClick={onClick} />);
 
-    const button = screen.getByRole('button');
+    const button = page.getByRole('button');
 
     await userEvent.click(button);
 
-    const button2 = screen.getByRole('button');
-    expect(button2).toHaveTextContent('Loading…');
+    await expect.element(button).toHaveTextContent('Loading…');
 
-    await act(async () => {
-      resolve();
-    });
+    resolve?.();
 
-    const button3 = screen.getByRole('button');
-    expect(button3).toHaveTextContent('Success!');
+    await expect.element(button).toHaveTextContent('Success!');
 
-    act(() => {
-      vi.advanceTimersByTime(1000);
-    });
+    vi.advanceTimersByTime(1000);
 
-    const button4 = screen.getByRole('button');
-    expect(button4).toHaveTextContent('Success!');
+    await expect.element(button).toHaveTextContent('Success!');
 
-    act(() => {
-      vi.advanceTimersByTime(1000);
-    });
+    vi.advanceTimersByTime(1000);
 
-    const button5 = screen.getByRole('button');
-    expect(button5).toHaveTextContent('Click me');
+    await expect.element(button).toHaveTextContent('Click me');
   });
 
   it('should allow button props to be passed by default', () => {
