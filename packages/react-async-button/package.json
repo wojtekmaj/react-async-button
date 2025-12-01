@@ -61,8 +61,10 @@
     "provenance": true
   },
   "files": [
-    "dist",
-    "src"
+    "dist/**/*",
+    "src/**/*",
+    "!**/*.spec.ts",
+    "!**/*.spec.tsx"
   ],
   "repository": {
     "type": "git",
