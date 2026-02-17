@@ -20,13 +20,13 @@
   "license": "MIT",
   "dependencies": {
     "@wojtekmaj/react-async-button": "workspace:packages/react-async-button",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "styled-components": "^6.1.8"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.2",
-    "@types/react": "*",
+    "@types/react": "^19.2.0",
     "@types/styled-components": "^5.1.26",
     "@vitejs/plugin-react": "^4.6.0",
     "typescript": "^5.9.2",
